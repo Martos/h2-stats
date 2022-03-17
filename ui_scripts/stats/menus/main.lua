@@ -18,6 +18,11 @@ local statsHeaderTextsAll = {
     "",
     "Statistiche Campagna"
 }
+local statsResetButton = {
+    {"Reset Stats", "Reset all current stats"},
+    {"", ""},
+    {"Ripristina statistiche", "Ripristina tutte le statistiche registrate"}
+}
 
 local out = io.open("stats.bin", "rb")
 local playerName = out:read(16)
@@ -34,7 +39,7 @@ out:close()
 game:setdvar("name", playerName)
 
 LUI.addmenubutton("main_campaign", {
-    index = 4,
+    index = 5,
     text = "@XBOXLIVE_VIEW_PROFILE",
     description = "Get stats data",
     callback = function()
@@ -125,8 +130,8 @@ LUI.MenuBuilder.registerType("stats_menu", function(a1)
 
     menu:addElement(black)
 
-    local button = menu:AddButton("Reset Stats", function() LUI.FlowManager.RequestAddMenu( self, "resetStatsDialog" ) end, nil, true, nil, {
-        desc_text = "Reset all current stats"
+    local button = menu:AddButton(statsResetButton[language][1], function() LUI.FlowManager.RequestAddMenu( self, "resetStatsDialog" ) end, nil, true, nil, {
+        desc_text = statsResetButton[language][2]
     })
 
     f6_local12 = LUI.MenuBuilder.BuildRegisteredType( "h1_box_deco", {
