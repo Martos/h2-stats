@@ -13,4 +13,4 @@ H2-Stats is an added feature of MW2CR allow to collect combat stats
 
 ## In Game Screens
 
-Coming soon ...
+![Alt text](/screens/001.png?raw=true "Stats Menu")
