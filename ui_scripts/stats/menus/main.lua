@@ -78,7 +78,7 @@ function generateStatsMenu(parent)
             left = 200,
             width = 0,
             height = 25,
-            color = aar_score_gold,
+            color = text_rarity3,
             alpha = 1
         } )
 
@@ -165,7 +165,7 @@ LUI.MenuBuilder.registerType("stats_menu", function(a1)
         left = -180,
         width = 0,
         height = 35,
-        color = first_place_color,
+        color = text_rarity3,
         alpha = 1
     } )
     f7_local14:setText( statsHeaderTextsAll[language] )
