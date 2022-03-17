@@ -50,7 +50,6 @@ function generateStatsMenu(parent)
             left = -250,
             width = 0,
             height = 25,
-            color = light_grey,
             alpha = 1
         } )
 
@@ -67,6 +66,8 @@ function generateStatsMenu(parent)
 
         test:setText(statsTextsAll[language][i])
         numberCont:setText(playerStats[i])
+        test:setTextStyle( CoD.TextStyle.Shadowed )
+        numberCont:setTextStyle( CoD.TextStyle.Shadowed )
 
         parent:addElement(test)
         parent:addElement(numberCont)
@@ -151,10 +152,16 @@ LUI.MenuBuilder.registerType("stats_menu", function(a1)
 
     generateStatsMenu(f6_local12);
 
-
 	f6_local12:addElement( f7_local14 )
-    menu:addElement( f6_local12 )
 
+    --[[
+        f6_local12:registerAnimationState("Faded", {
+            alpha = 0
+        })
+        f6_local12:animateToState( "Faded", 0 )
+    ]]--
+
+    menu:addElement( f6_local12 )
     menu:AddBackButton(function(a1)
         Engine.PlaySound(CoD.SFX.MenuBack)
         LUI.FlowManager.RequestLeaveMenu(a1)
