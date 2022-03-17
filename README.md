@@ -6,6 +6,7 @@ H2-Stats is an added feature of MW2CR allow to collect combat stats
 ## Features
 
 - Simple statistics
+- Multi languages supports
 
 ## Requirement
 
