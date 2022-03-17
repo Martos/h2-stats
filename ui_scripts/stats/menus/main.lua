@@ -1,12 +1,12 @@
 local ui = require("utils/ui")
 
-local playerStats = {"0", "0", "0"}
+local playerStats = {"0", "0", "0", "0"}
 
 local language = 1 | game:getdvarint("loc_language")
 local statsTextsAll = {
-    {"Kills", "Deaths", "Damage Dealt"},
+    {"Kills", "Deaths", "Damage Dealt", "Game Time"},
     {},
-    {"Uccisioni", "Morti", "Danni Inflitti"}
+    {"Uccisioni", "Morti", "Danni Inflitti", "Tempo di gioco"}
 }
 local statsResetTextsAll = {
     "Do you want to restore the statistics recorded ?",
@@ -27,6 +27,8 @@ out:seek("set", 30)
 playerStats[2] = out:read(8)
 out:seek("set", 40)
 playerStats[3] = out:read(8)
+out:seek("set", 50)
+playerStats[4] = out:read("*n")
 out:close()
 
 game:setdvar("name", playerName)
@@ -40,9 +42,25 @@ LUI.addmenubutton("main_campaign", {
     end
 })
 
+function formatDate()
+    local milliseconds = playerStats[4]
+    local seconds = (milliseconds // 1000)
+
+    if seconds <= 0 then
+        playerStats[4] = "00:00:00";
+    else
+      hours = string.format("%02.f", math.floor(seconds/3600));
+      mins = string.format("%02.f", math.floor(seconds/60 - (hours*60)));
+      secs = string.format("%02.f", math.floor(seconds - hours*3600 - mins *60));
+      playerStats[4] = string.format("%02d:%02d:%02d", hours, mins, secs)
+    end
+end
+
+formatDate()
+
 function generateStatsMenu(parent)
 
-    for i = 1,3 do
+    for i = 1,4 do
         local test = LUI.UIText.new( {
             font = CoD.TextSettings.SP_HudAmmoStatusText.Font,
             alignment = LUI.AdjustAlignmentForLanguage( LUI.Alignment.Left ),
@@ -142,7 +160,7 @@ LUI.MenuBuilder.registerType("stats_menu", function(a1)
         font = CoD.TextSettings.SP_HudAmmoStatusText.Font,
         alignment = LUI.AdjustAlignmentForLanguage( LUI.Alignment.Left ),
         top = -220,
-        left = -170,
+        left = -180,
         width = 0,
         height = 35,
         color = first_place_color,
