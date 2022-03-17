@@ -1,28 +1,9 @@
 local ui = require("utils/ui")
 
 local playerStats = {"0", "0", "0", "0"}
+local statsVersion = 0
 
 local language = 1 | game:getdvarint("loc_language")
-local statsTextsAll = {
-    {"Kills", "Deaths", "Damage Dealt", "Game Time"},
-    {},
-    {"Uccisioni", "Morti", "Danni Inflitti", "Tempo di gioco"}
-}
-local statsResetTextsAll = {
-    "Do you want to restore the statistics recorded ?",
-    "",
-    "Vuoi ripristinare le statistiche registrate fino ad'ora ?"
-}
-local statsHeaderTextsAll = {
-    "Campaign Stats",
-    "",
-    "Statistiche Campagna"
-}
-local statsResetButton = {
-    {"Reset Stats", "Reset all current stats"},
-    {"", ""},
-    {"Ripristina statistiche", "Ripristina tutte le statistiche registrate"}
-}
 
 local out = io.open("stats.bin", "rb")
 local playerName = out:read(16)
@@ -34,6 +15,8 @@ out:seek("set", 40)
 playerStats[3] = out:read(8)
 out:seek("set", 50)
 playerStats[4] = out:read("*n")
+out:seek("set", 100)
+statsVersion = out:read("*n")
 out:close()
 
 game:setdvar("name", playerName)
@@ -65,6 +48,18 @@ formatDate()
 
 function generateStatsMenu(parent)
 
+    local printVersion = LUI.UIText.new( {
+        font = CoD.TextSettings.SP_HudAmmoStatusText.Font,
+        alignment = LUI.AdjustAlignmentForLanguage( LUI.Alignment.Left ),
+        top = 250,
+        left = 250,
+        width = 0,
+        height = 12,
+        alpha = 1
+    } )
+
+    printVersion:setText(statsVersionAll[language].." "..statsVersion)
+
     for i = 1,4 do
         local test = LUI.UIText.new( {
             font = CoD.TextSettings.SP_HudAmmoStatusText.Font,
@@ -95,6 +90,8 @@ function generateStatsMenu(parent)
         parent:addElement(test)
         parent:addElement(numberCont)
     end
+
+    parent:addElement(printVersion)
 
 end
 
