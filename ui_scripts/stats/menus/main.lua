@@ -63,29 +63,31 @@ function generateStatsMenu(parent)
     for i = 1,4 do
         local test = LUI.UIText.new( {
             font = CoD.TextSettings.SP_HudAmmoStatusText.Font,
+            textStyle = CoD.TextStyle.ShadowedMore,
             alignment = LUI.AdjustAlignmentForLanguage( LUI.Alignment.Left ),
             top = -170 + (i * 25),
             left = -250,
             width = 0,
-            height = 25,
+            height = CoD.TextSettings.SP_HudAmmoStatusText.Height,
             alpha = 1
         } )
 
         local numberCont = LUI.UIText.new( {
             font = CoD.TextSettings.SP_HudAmmoStatusText.Font,
+            textStyle = CoD.TextStyle.ShadowedMore,
             alignment = LUI.AdjustAlignmentForLanguage( LUI.Alignment.Left ),
             top = -170 + (i * 25),
             left = 200,
             width = 0,
-            height = 25,
+            height = CoD.TextSettings.SP_HudAmmoStatusText.Height,
             color = text_rarity3,
             alpha = 1
         } )
 
         test:setText(statsTextsAll[language][i])
         numberCont:setText(playerStats[i])
-        test:setTextStyle( CoD.TextStyle.Shadowed )
-        numberCont:setTextStyle( CoD.TextStyle.Shadowed )
+        test:setTextStyle( CoD.TextStyle.ShadowedMore )
+        numberCont:setTextStyle( CoD.TextStyle.ShadowedMore )
 
         parent:addElement(test)
         parent:addElement(numberCont)
@@ -160,15 +162,17 @@ LUI.MenuBuilder.registerType("stats_menu", function(a1)
     --f7_local14:setText( game:getdvar("name") )
     f7_local14 = LUI.UIText.new( {
         font = CoD.TextSettings.SP_HudAmmoStatusText.Font,
+        textStyle = CoD.TextStyle.ShadowedMore,
         alignment = LUI.AdjustAlignmentForLanguage( LUI.Alignment.Left ),
         top = -220,
-        left = -180,
+        left = -150,
         width = 0,
-        height = 35,
+        height = 30,
         color = text_rarity3,
         alpha = 1
     } )
     f7_local14:setText( statsHeaderTextsAll[language] )
+    f7_local14:setTextStyle( CoD.TextStyle.ShadowedMore )
 
     generateStatsMenu(f6_local12);
 
