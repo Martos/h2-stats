@@ -1,23 +1,46 @@
 local ui = require("utils/ui")
 
-local playerStats = {"0", "0", "0", "0"}
+local playerStats = {0, 0, 0, 0}
 local statsVersion = 36
 
 local language = 1 | game:getdvarint("loc_language")
 
 local out = io.open("stats.bin", "rb")
-local playerName = out:read(16)
-out:seek("set", 20)
-playerStats[1] = out:read("*n")
-out:seek("set", 30)
-playerStats[2] = out:read(8)
-out:seek("set", 40)
-playerStats[3] = out:read(8)
-out:seek("set", 50)
-playerStats[4] = out:read("*n")
-out:seek("set", 100)
-statsVersion = out:read("*n")
-out:close()
+
+if out == nil then
+    LUI.FlowManager.RequestAddMenu( self, "welcomeDialog" )
+    local out = io.open("stats.bin", "w")
+        
+    out:write(game:getdvar("name"))
+    out:seek("set", 20)
+    out:write("0")
+    out:seek("set", 30)
+    out:write("0")
+    out:seek("set", 40)
+    out:write("0")
+    out:seek("set", 50)
+    out:write("0")
+    out:seek("set", 100)
+    out:write(statsVersion)
+
+    out:close()
+end
+if out ~=nil then
+    local playerName = out:read(16)
+    out:seek("set", 20)
+    playerStats[1] = out:read("*n")
+    out:seek("set", 30)
+    playerStats[2] = out:read("*n")
+    out:seek("set", 40)
+    playerStats[3] = out:read("*n")
+    out:seek("set", 50)
+    playerStats[4] = out:read("*n")
+    out:seek("set", 100)
+    statsVersion = out:read("*n")
+    out:close()
+end
+
+
 
 game:setdvar("name", playerName)
 
@@ -240,6 +263,17 @@ function resetStats()
     LUI.FlowManager.RequestAddMenu( self, "resetSuccessDialog" )
 end
 
+function welcome_stats_popup( f15_arg0, f15_arg1 )
+    return LUI.MenuBuilder.BuildRegisteredType( "generic_confirmation_popup", {
+		cancel_will_close = false,
+		popup_title = welcomePopUpAll[language][1],
+		message_text = welcomePopUpAll[language][2],
+		button_text = welcomePopUpAll[language][3],
+		confirmation_action = function() end
+	} )
+end
+
+
 function reset_popmenu( f15_arg0, f15_arg1 )
 	return LUI.MenuBuilder.BuildRegisteredType( "generic_yesno_popup", {
 		popup_title = Engine.Localize( "@MENU_NOTICE" ),
@@ -269,6 +303,7 @@ function reset_success( f15_arg0, f15_arg1 )
 	} )
 end
 
+LUI.MenuBuilder.registerPopupType( "welcomeDialog", welcome_stats_popup )
 LUI.MenuBuilder.registerPopupType( "resetStatsDialog", reset_popmenu )
 LUI.MenuBuilder.registerPopupType( "unlockAllDialog", unlock_all_popmenu )
 LUI.MenuBuilder.registerPopupType( "resetSuccessDialog", reset_success )

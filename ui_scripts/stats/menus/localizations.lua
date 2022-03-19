@@ -3,6 +3,11 @@ statsEntryDescription = {
     "",
     "Mostra statistiche giocatore"
 }
+welcomePopUpAll = {
+    {"Welcome on H2 Stats", "Welcome soldier! A new tab will be created containing your career progress", "Confirm"},
+    {"","",""},
+    {"Benvenuto in H2 Stats", "Benvenuto soldato! Verrà creato una nuova scheda contenente i tuoi progressi di carriera", "Conferma"}
+}
 statsTextsAll = {
     {"Kills", "Deaths", "Damage Dealt", "Game Time"},
     {},
