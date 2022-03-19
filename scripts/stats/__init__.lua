@@ -39,6 +39,7 @@ function main()
         tmp[4] = (tonumber(playerStats[4]) or 0) + gametime
         
         local out = io.open("stats.bin", "wb")
+        
         out:write(playerName)
         out:seek("set", 20)
         out:write(tmp[1])

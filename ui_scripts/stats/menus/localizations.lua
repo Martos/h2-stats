@@ -23,3 +23,8 @@ statsVersionAll = {
     "",
     "Versione"
 }
+statsResetSuccessAll = {
+    "Stats reset success",
+    "",
+    "Ripristino statistiche completato"
+}

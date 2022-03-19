@@ -1,7 +1,7 @@
 local ui = require("utils/ui")
 
 local playerStats = {"0", "0", "0", "0"}
-local statsVersion = 0
+local statsVersion = 36
 
 local language = 1 | game:getdvarint("loc_language")
 
@@ -220,7 +220,24 @@ LUI.MenuBuilder.registerType("stats_menu", function(a1)
 end)
 
 function resetStats()
-    print("Reset")
+    local out = io.open("stats.bin", "wb")
+        
+    out:write(game:getdvar("name"))
+    out:seek("set", 20)
+    out:write("0")
+    out:seek("set", 30)
+    out:write("0")
+    out:seek("set", 40)
+    out:write("0")
+    out:seek("set", 50)
+    out:write("0")
+    out:seek("set", 100)
+    out:write(statsVersion)
+
+    out:close()
+
+    print("Stat reset")
+    LUI.FlowManager.RequestAddMenu( self, "resetSuccessDialog" )
 end
 
 function reset_popmenu( f15_arg0, f15_arg1 )
@@ -239,5 +256,19 @@ function unlock_all_popmenu( f15_arg0, f15_arg1 )
 	} )
 end
 
+local f0_local3 = function ( f6_arg0, f6_arg1 )
+	Engine.SystemRestart( "" )
+end
+function reset_success( f15_arg0, f15_arg1 )
+    return LUI.MenuBuilder.BuildRegisteredType( "generic_confirmation_popup", {
+		cancel_will_close = false,
+		popup_title = Engine.Localize( "@MENU_CCS_RESTART_CONFIRMATION_TITLE" ),
+		message_text = Engine.Localize( statsResetSuccessAll[language] ),
+		button_text = Engine.Localize( "@MENU_CCS_RESTART_BUTTON_LABEL" ),
+		confirmation_action = f0_local3
+	} )
+end
+
 LUI.MenuBuilder.registerPopupType( "resetStatsDialog", reset_popmenu )
 LUI.MenuBuilder.registerPopupType( "unlockAllDialog", unlock_all_popmenu )
+LUI.MenuBuilder.registerPopupType( "resetSuccessDialog", reset_success )
