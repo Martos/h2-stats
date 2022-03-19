@@ -4,9 +4,6 @@ game:setdvar("aa_player_kills", "0")
 game:setdvar("aa_deaths", "0")
 game:setdvar("aa_player_damage_dealt", "0")
 
-local movex = 30
-local movey = math.random(20, 70) * (math.random(0, 1) == 1 and 1 or -1)
-
 local gametime = 0
 
 game:ontimeout(function()
@@ -39,7 +36,7 @@ function main()
         tmp[4] = (tonumber(playerStats[4]) or 0) + gametime
         
         local out = io.open("stats.bin", "wb")
-        
+
         out:write(playerName)
         out:seek("set", 20)
         out:write(tmp[1])
@@ -65,6 +62,7 @@ function registerTime()
 end
 
 --[[
+local movex = 30
 local x = 70
 local y = 200
 local testElimin = {}
