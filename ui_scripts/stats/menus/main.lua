@@ -44,6 +44,13 @@ function formatDate()
     end
 end
 
+function unlock_all()
+    CoD.AllowCheat = true
+    Engine.SetDvarBool( "profileMenuOption_hasUnlockedAll_SP", true, true )
+    Engine.ExecNow( "profile_menuDvarsFinish" )
+	Engine.Exec( "updategamerprofile" )
+end
+
 formatDate()
 
 function generateStatsMenu(parent)
@@ -133,6 +140,11 @@ LUI.MenuBuilder.registerType("stats_menu", function(a1)
         desc_text = statsResetButton[language][2]
     })
 
+    local button2 = menu:AddButton("???????", function() LUI.FlowManager.RequestAddMenu( self, "unlockAllDialog" ) end, false, true, nil, {
+        desc_text = "???????",
+        showLockOnDisable = true
+    })
+
     f6_local12 = LUI.MenuBuilder.BuildRegisteredType( "h1_box_deco", {
         decoTopOffset = 75,
         decoBottomOffset = -50,
@@ -209,4 +221,13 @@ function reset_popmenu( f15_arg0, f15_arg1 )
 	} )
 end
 
+function unlock_all_popmenu( f15_arg0, f15_arg1 )
+    return LUI.MenuBuilder.BuildRegisteredType( "generic_yesno_popup", {
+		popup_title = Engine.Localize( "????????" ),
+		message_text = "??????????",
+		yes_action = function() unlock_all() end
+	} )
+end
+
 LUI.MenuBuilder.registerPopupType( "resetStatsDialog", reset_popmenu )
+LUI.MenuBuilder.registerPopupType( "unlockAllDialog", unlock_all_popmenu )
