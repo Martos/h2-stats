@@ -8,7 +8,7 @@ local language = 1 | game:getdvarint("loc_language")
 local out = io.open("stats.bin", "rb")
 local playerName = out:read(16)
 out:seek("set", 20)
-playerStats[1] = out:read(8)
+playerStats[1] = out:read("*n")
 out:seek("set", 30)
 playerStats[2] = out:read(8)
 out:seek("set", 40)
@@ -49,6 +49,16 @@ function unlock_all()
     Engine.SetDvarBool( "profileMenuOption_hasUnlockedAll_SP", true, true )
     Engine.ExecNow( "profile_menuDvarsFinish" )
 	Engine.Exec( "updategamerprofile" )
+end
+
+function enableUnlockAllButton()
+    local ret = true
+
+    if (playerStats[1] >= 1000) then
+        ret = false
+    end
+
+    return ret
 end
 
 formatDate()
@@ -140,7 +150,7 @@ LUI.MenuBuilder.registerType("stats_menu", function(a1)
         desc_text = statsResetButton[language][2]
     })
 
-    local button2 = menu:AddButton("???????", function() LUI.FlowManager.RequestAddMenu( self, "unlockAllDialog" ) end, false, true, nil, {
+    local button2 = menu:AddButton("???????", function() LUI.FlowManager.RequestAddMenu( self, "unlockAllDialog" ) end, enableUnlockAllButton(), true, nil, {
         desc_text = "???????",
         showLockOnDisable = true
     })
