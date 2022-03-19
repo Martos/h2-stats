@@ -24,7 +24,7 @@ game:setdvar("name", playerName)
 LUI.addmenubutton("main_campaign", {
     index = 5,
     text = "@XBOXLIVE_VIEW_PROFILE",
-    description = "Get stats data",
+    description = statsEntryDescription[language],
     callback = function()
         LUI.FlowManager.RequestAddMenu(nil, "stats_menu")
     end
