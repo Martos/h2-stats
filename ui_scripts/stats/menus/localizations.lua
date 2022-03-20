@@ -9,9 +9,9 @@ welcomePopUpAll = {
     {"Benvenuto in H2 Stats", "Benvenuto soldato! Verrà creato una nuova scheda contenente i tuoi progressi di carriera", "Conferma"}
 }
 statsTextsAll = {
-    {"Kills", "Deaths", "Damage Dealt", "Game Time"},
+    {"Kills", "Deaths", "Damage Dealt", "Game Time", "XP"},
     {},
-    {"Uccisioni", "Morti", "Danni Inflitti", "Tempo di gioco"}
+    {"Uccisioni", "Morti", "Danni Inflitti", "Tempo di gioco", "PE"}
 }
 statsResetTextsAll = {
     "Do you want to restore the statistics recorded ? IT CANNOT BE UNDONE !",

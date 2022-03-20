@@ -1,6 +1,6 @@
 local ui = require("utils/ui")
 
-local playerStats = {0, 0, 0, 0}
+local playerStats = {0, 0, 0, 0, 0}
 local statsVersion = 36
 
 local language = 1 | game:getdvarint("loc_language")
@@ -20,6 +20,8 @@ if out == nil then
     out:write("0")
     out:seek("set", 50)
     out:write("0")
+    out:seek("set", 60)
+    out:write("0")
     out:seek("set", 100)
     out:write(statsVersion)
 
@@ -35,6 +37,8 @@ if out ~=nil then
     playerStats[3] = out:read("*n")
     out:seek("set", 50)
     playerStats[4] = out:read("*n")
+    out:seek("set", 60)
+    playerStats[5] = out:read("*n")
     out:seek("set", 100)
     statsVersion = out:read("*n")
     out:close()
@@ -100,7 +104,7 @@ function generateStatsMenu(parent)
 
     printVersion:setText(statsVersionAll[language].." "..statsVersion)
 
-    for i = 1,4 do
+    for i = 1,#statsTextsAll[language] do
         local test = LUI.UIText.new( {
             font = CoD.TextSettings.SP_HudAmmoStatusText.Font,
             textStyle = CoD.TextStyle.ShadowedMore,
