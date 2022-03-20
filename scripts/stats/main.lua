@@ -29,7 +29,7 @@ function callback()
     tmp[2] = (tonumber(playerStats[2]) or 0) + game:getdvarint("aa_deaths")
     tmp[3] = (tonumber(playerStats[3]) or 0) + game:getdvarint("aa_player_damage_dealt")
     tmp[4] = (tonumber(playerStats[4]) or 0) + gametime
-    tmp[5] = (tonumber(playerStats[5]) or 0) + totalXP
+    tmp[5] = (tonumber(playerStats[5]) or 0) + game:sharedget("totalXP")
     
     local out = io.open("stats.bin", "wb")
 
