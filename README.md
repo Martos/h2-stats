@@ -7,6 +7,7 @@ H2-Stats is a modification that allows you to collect statistics in game
 ## Features
 
 - Simple stats menu
+- XP Progression
 - Multi languages supports
 
 ## Requirement
