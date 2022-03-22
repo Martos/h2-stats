@@ -1,5 +1,4 @@
 local gametime = 0
-local totalXP = 0
 
 local playerStats = {"0", "0", "0", "0", "0"}
 local version = 36
@@ -19,7 +18,6 @@ playerStats[5] = out:read("*n")
 out:close()
 
 totalXP = playerStats[5]
-game:sharedset("totalXP", totalXP .. "")
 
 local tmp = {0, 0, 0, 0, 0}
 function callback()
@@ -29,7 +27,7 @@ function callback()
     tmp[2] = (tonumber(playerStats[2]) or 0) + game:getdvarint("aa_deaths")
     tmp[3] = (tonumber(playerStats[3]) or 0) + game:getdvarint("aa_player_damage_dealt")
     tmp[4] = (tonumber(playerStats[4]) or 0) + gametime
-    tmp[5] = (tonumber(playerStats[5]) or 0) + game:sharedget("totalXP")
+    tmp[5] = (tonumber(playerStats[5]) or 0) + partialXP
     
     local out = io.open("stats.bin", "wb")
 

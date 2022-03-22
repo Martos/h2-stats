@@ -4,7 +4,6 @@ local y = 200
 
 local listeners = {}
 
-local totalXP = game:sharedget("totalXP")
 local partial = totalXP
 
 table.insert(listeners, game:oninterval(function()
@@ -91,7 +90,7 @@ end, 0))
 
 local _ID12439_hook = game:detour("_ID42298", "_ID12439", function(typeA, loc, point, attacker) 
     totalXP = totalXP + 10
-    game:sharedset("totalXP", totalXP .. "")
+    partialXP = partialXP + 10
 end)
 
 _ID12439_hook.enable()
@@ -102,7 +101,7 @@ local _ID1704_hook = game:detour("_ID42298", "_ID1704", function(var_0, var_1, v
 
     if (var_1 == "aa_player_kills") then
         totalXP = totalXP + 100
-        game:sharedset("totalXP", totalXP .. "")
+        partialXP = partialXP + 100
     end
 end)
 
