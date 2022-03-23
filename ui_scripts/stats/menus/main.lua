@@ -194,6 +194,8 @@ LUI.MenuBuilder.registerType("stats_menu", function(a1)
     local f6_local13 = CoD.CreateState( 100, 100, 650, 100, CoD.AnchorTypes.TopLeft )
     f6_local13.color = aar_score_gold
     f6_local12:addElement( LUI.UILine.new( f6_local13 ) )
+
+    showProgressBar(f6_local12, playerStats[5])
     
     --[[ Linea in alto a destra
     local f6_local14 = CoD.CreateState( 0, 0.5, -8, 0.5, CoD.AnchorTypes.TopRight )
@@ -242,6 +244,8 @@ LUI.MenuBuilder.registerType("stats_menu", function(a1)
 
     menu.list.listHeight = 208
     menu.optionTextInfo = LUI.Options.AddOptionTextInfo(menu)
+
+    updateProgressXP()
 
     return menu
 end)
