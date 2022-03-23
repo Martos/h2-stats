@@ -1,0 +1,5 @@
+xpLabelAll = {
+    "XP",
+    "XP",
+    "PE"
+}

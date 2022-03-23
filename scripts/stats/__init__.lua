@@ -9,6 +9,7 @@ partialXP = 0
 
 game:ontimeout(function()
     game:ontimeout(function()
+        require("localization")
         require("xp")
         require("main")
     end, 0)

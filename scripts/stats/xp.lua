@@ -3,7 +3,7 @@ local x = 70
 local y = 200
 
 local listeners = {}
-
+local language = 1 | game:getdvarint("loc_language")
 local partial = totalXP
 
 table.insert(listeners, game:oninterval(function()
@@ -49,7 +49,7 @@ table.insert(listeners, game:oninterval(function()
         xpLabel.glowcolor = vector:new(1, 1, 1)
         xpLabel.x = (xOffset)
         xpLabel.y = y
-        xpLabel.label = "XP"
+        xpLabel.label = xpLabelAll[language]
         xpLabel:moveovertime(0.1)
         xpLabel:fadeovertime(2)
         xpLabel.x = (x+20) - 10 - movex
