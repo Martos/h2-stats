@@ -248,6 +248,8 @@ function resetStats()
     out:write("0")
     out:seek("set", 50)
     out:write("0")
+    out:seek("set", 60)
+    out:write("0")
     out:seek("set", 100)
     out:write(statsVersion)
 
