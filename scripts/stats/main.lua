@@ -21,8 +21,6 @@ totalXP = playerStats[5]
 
 local tmp = {0, 0, 0, 0, 0}
 function callback()
-    registerTime()
-
     tmp[1] = (tonumber(playerStats[1]) or 0) + game:getdvarint("aa_player_kills")
     tmp[2] = (tonumber(playerStats[2]) or 0) + game:getdvarint("aa_deaths")
     tmp[3] = (tonumber(playerStats[3]) or 0) + game:getdvarint("aa_player_damage_dealt")
@@ -55,3 +53,5 @@ function registerTime()
         gametime = gametime + 1 
     end, 1)
 end
+
+registerTime()
