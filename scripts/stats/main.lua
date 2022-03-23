@@ -51,7 +51,7 @@ local timer = game:oninterval(callback, 500)
 function registerTime()
     game:oninterval(function() 
         gametime = gametime + 1 
-    end, 1)
+    end, 990)
 end
 
 registerTime()

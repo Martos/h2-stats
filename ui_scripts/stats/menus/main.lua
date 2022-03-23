@@ -58,8 +58,7 @@ LUI.addmenubutton("main_campaign", {
 })
 
 function formatDate()
-    local milliseconds = playerStats[4]
-    local seconds = (milliseconds // 1000)
+    local seconds = playerStats[4]
 
     if seconds <= 0 then
         playerStats[4] = "00:00:00";
