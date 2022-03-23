@@ -3,18 +3,7 @@ local totalXP = 0
 
 local f7_local15 = nil
 
-function showProgressBar(menu, playerXp)
-    --[[
-    local f2_local11 = CoD.CreateState( 2, nil, nil, -24, CoD.AnchorTypes.BottomLeft )
-    f2_local11.width = 26
-    f2_local11.height = 26
-    f2_local11.material = RegisterMaterial( "white" )
-    local rankIcon = LUI.UIImage.new( f2_local11 )
-    rankIcon:setImage(RegisterMaterial("icon_rank_01"))
-    menu:addElement(rankIcon)
-    ]]--
-    totalXP = playerXp
-
+function showLevelLabels(menu)
     local f7_local14 = LUI.UIText.new( {
         font = CoD.TextSettings.SP_HudAmmoStatusText.Font,
         textStyle = CoD.TextStyle.ShadowedMore,
@@ -44,6 +33,21 @@ function showProgressBar(menu, playerXp)
 
     menu:addElement( f7_local14 )
     menu:addElement( f7_local15 )
+end
+
+function showProgressBar(menu, playerXp)
+    --[[
+    local f2_local11 = CoD.CreateState( 2, nil, nil, -24, CoD.AnchorTypes.BottomLeft )
+    f2_local11.width = 26
+    f2_local11.height = 26
+    f2_local11.material = RegisterMaterial( "white" )
+    local rankIcon = LUI.UIImage.new( f2_local11 )
+    rankIcon:setImage(RegisterMaterial("icon_rank_01"))
+    menu:addElement(rankIcon)
+    ]]--
+    totalXP = playerXp
+
+    showLevelLabels(menu)
 
     progressBar = LUI.MenuBuilder.BuildAddChild(menu, {
         type = "UIProgressBar",
