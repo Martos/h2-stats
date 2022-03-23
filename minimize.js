@@ -7,33 +7,34 @@ fs.rmdir('./dist', { recursive: true }, (err) => {
     }
 
     fs.mkdirSync('./dist');
-    fs.mkdirSync('./dist/scripts');
-    fs.mkdirSync('./dist/scripts/stats');
-    fs.mkdirSync('./dist/ui_scripts');
-    fs.mkdirSync('./dist/ui_scripts/stats');
-    fs.mkdirSync('./dist/ui_scripts/stats/common');
-    fs.mkdirSync('./dist/ui_scripts/stats/menus');
+    fs.mkdirSync('./dist/stats');
+    fs.mkdirSync('./dist/stats/scripts');
+    fs.mkdirSync('./dist/stats/scripts/stats');
+    fs.mkdirSync('./dist/stats/ui_scripts');
+    fs.mkdirSync('./dist/stats/ui_scripts/stats');
+    fs.mkdirSync('./dist/stats/ui_scripts/stats/common');
+    fs.mkdirSync('./dist/stats/ui_scripts/stats/menus');
 
     fs.readdir('./scripts/stats/', (err, files) => {
         files.forEach(file => {
             const buffer = fs.readFileSync('./scripts/stats/' + file);
             const fileContent = buffer.toString();
             var test = luamin.minify(fileContent);
-            fs.writeFile('./dist/scripts/stats/' + file, test, function() {})
+            fs.writeFile('./dist/stats/scripts/stats/' + file, test, function() {})
         });
     });
 
     const buffer = fs.readFileSync('./ui_scripts/stats/' + '__init__.lua');
     const fileContent = buffer.toString();
     var test = luamin.minify(fileContent);
-    fs.writeFile('./dist/ui_scripts/stats/' + '__init__.lua', test, function() {})
+    fs.writeFile('./dist/stats/ui_scripts/stats/' + '__init__.lua', test, function() {})
 
     fs.readdir('./ui_scripts/stats/common/', (err, files) => {
         files.forEach(file => {
             const buffer = fs.readFileSync('./ui_scripts/stats/common/' + file);
             const fileContent = buffer.toString();
             var test = luamin.minify(fileContent);
-            fs.writeFile('./dist/ui_scripts/stats/common/' + file, test, function() {})
+            fs.writeFile('./dist/stats/ui_scripts/stats/common/' + file, test, function() {})
         });
     });
 
@@ -42,7 +43,11 @@ fs.rmdir('./dist', { recursive: true }, (err) => {
             const buffer = fs.readFileSync('./ui_scripts/stats/menus/' + file);
             const fileContent = buffer.toString();
             var test = luamin.minify(fileContent);
-            fs.writeFile('./dist/ui_scripts/stats/menus/' + file, test, function() {})
+            fs.writeFile('./dist/stats/ui_scripts/stats/menus/' + file, test, function() {})
         });
+    });
+
+    fs.copyFile('info.json', './dist/stats/info.json', (err) => {
+        if (err) throw err;
     });
 });
