@@ -6,6 +6,17 @@ local listeners = {}
 local language = 1 | game:getdvarint("loc_language")
 local partial = totalXP
 
+function calculatePlayerLevels()
+    local res = totalXP / 22000
+    local levels = math.floor( totalXP / 22000 )
+
+    res = (res - levels) * 100
+
+    return res
+end
+
+local xpBar = createprogressbar()
+
 table.insert(listeners, game:oninterval(function()
     if (partial ~= totalXP) then
 
@@ -86,6 +97,7 @@ table.insert(listeners, game:oninterval(function()
     end
 
     partial = totalXP
+    xpBar.setpercentage(calculatePlayerLevels())
 end, 0))
 
 local _ID12439_hook = game:detour("_ID42298", "_ID12439", function(typeA, loc, point, attacker) 
