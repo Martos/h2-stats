@@ -67,7 +67,7 @@ end
 function enableUnlockAllButton()
     local ret = true
 
-    if (playerStats[1] >= 1000) then
+    if (playerStats[5] >= 50000) then
         ret = false
     end
 
