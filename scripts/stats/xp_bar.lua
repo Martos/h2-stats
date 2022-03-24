@@ -1,4 +1,9 @@
 function createprogressbar()
+    local background = nil
+    local topborder = nil
+    local bottomborder = nil
+    local bar = nil
+
     local width = 582
     local height = 10
 
@@ -10,7 +15,7 @@ function createprogressbar()
     local x = 29
     local y = 468
     
-    local background = game:newhudelem()
+    background = game:newhudelem()
     background.x = x
     background.y = y
     background.alpha = 0.5
@@ -19,7 +24,7 @@ function createprogressbar()
     background.color = vector:new(0, 0, 0)
     background:setshader("white", width, height)
     
-    local topborder = game:newhudelem()
+    topborder = game:newhudelem()
     topborder.x = x
     topborder.y = y - 1
     topborder.alpha = 1
@@ -28,7 +33,7 @@ function createprogressbar()
     topborder.hidewheninmenu = true
     topborder:setshader("white", width, 1)
     
-    local bottomborder = game:newhudelem()
+    bottomborder = game:newhudelem()
     bottomborder.x = x
     bottomborder.y = y + height
     bottomborder.alpha = 1
@@ -37,7 +42,7 @@ function createprogressbar()
     bottomborder.hidewheninmenu = true
     bottomborder:setshader("white", width, 1)
     
-    local bar = game:newhudelem()
+    bar = game:newhudelem()
     bar.x = x
     bar.y = y
     bar.sort = 10
@@ -60,7 +65,7 @@ function createprogressbar()
         if (interval ~= nil) then
             interval:clear()
         end
-    
+
         percentage = math.max(0, math.min(percentage, 100))
         progressbar.percentage = percentage
     
@@ -97,3 +102,5 @@ function createprogressbar()
 
     return progressbar
 end
+
+xpBar = createprogressbar()

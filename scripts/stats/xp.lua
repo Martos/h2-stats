@@ -4,9 +4,13 @@ local y = 200
 
 local listeners = {}
 local language = 1 | game:getdvarint("loc_language")
-local partial = totalXP
+local partial = totalXP | 0
 
 function calculatePlayerLevels()
+    if totalXP == 0 then
+        return 0
+    end
+
     local res = totalXP / 22000
     local levels = math.floor( totalXP / 22000 )
 
@@ -14,8 +18,6 @@ function calculatePlayerLevels()
 
     return res
 end
-
-local xpBar = createprogressbar()
 
 table.insert(listeners, game:oninterval(function()
     if (partial ~= totalXP) then
@@ -101,8 +103,9 @@ table.insert(listeners, game:oninterval(function()
 end, 0))
 
 local _ID12439_hook = game:detour("_ID42298", "_ID12439", function(typeA, loc, point, attacker) 
-    totalXP = totalXP + 10
-    partialXP = partialXP + 10
+    local xpOffset = 10 * game:getdvarint( "g_gameskill" )
+    totalXP = totalXP + xpOffset
+    partialXP = partialXP + xpOffset
 end)
 
 _ID12439_hook.enable()
@@ -112,9 +115,23 @@ local _ID1704_hook = game:detour("_ID42298", "_ID1704", function(var_0, var_1, v
     game:setdvar( var_1, var_3 + var_2 )
 
     if (var_1 == "aa_player_kills") then
-        totalXP = totalXP + 100
-        partialXP = partialXP + 100
+        local xpOffset = 100 * game:getdvarint( "g_gameskill" )
+
+        totalXP = totalXP + xpOffset
+        partialXP = partialXP + xpOffset
     end
 end)
 
 _ID1704_hook.enable()
+
+player:onnotify("death", function() 
+    if (xpBar ~= nil) then
+        xpBar:destroy()
+    end
+end)
+
+game:onnotify("keydown", function(key)
+    if (key == 170 and game:getdvarint("cl_paused") == 0 and not Engine.InFrontend()) then
+        Engine.PlaySound("h1_ui_menu_accept")
+    end
+end)
