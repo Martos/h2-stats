@@ -99,7 +99,9 @@ table.insert(listeners, game:oninterval(function()
     end
 
     partial = totalXP
-    xpBar.setpercentage(calculatePlayerLevels())
+    if (game:getdvarint("xpbar_enabled") == 1) then
+        xpBar.setpercentage(calculatePlayerLevels())
+    end
 end, 0))
 
 local _ID12439_hook = game:detour("_ID42298", "_ID12439", function(typeA, loc, point, attacker) 

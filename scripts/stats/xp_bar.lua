@@ -103,4 +103,7 @@ function createprogressbar()
     return progressbar
 end
 
-xpBar = createprogressbar()
+xpBar = nil
+if (game:getdvarint("xpbar_enabled") == 1) then
+    xpBar = createprogressbar()
+end
