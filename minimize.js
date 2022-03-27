@@ -1,11 +1,7 @@
 const fs = require('fs');
 var luamin = require('luamin');
 
-fs.rmdir('./dist', { recursive: true }, (err) => {
-    if (err) {
-        throw err;
-    }
-
+function logic() {
     fs.mkdirSync('./dist');
     fs.mkdirSync('./dist/stats');
     fs.mkdirSync('./dist/stats/scripts');
@@ -50,4 +46,16 @@ fs.rmdir('./dist', { recursive: true }, (err) => {
     fs.copyFile('info.json', './dist/stats/info.json', (err) => {
         if (err) throw err;
     });
-});
+}
+
+if (fs.existsSync('./dist')) {
+    fs.rm('./dist', { recursive: true }, (err) => {
+        if (err) {
+            throw err;
+        }
+    
+        logic();
+    });
+} else {
+    logic();
+}
