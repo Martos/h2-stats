@@ -48,6 +48,8 @@ function logic() {
     fs.copyFile('info.json', './dist/stats/info.json', (err) => {
         if (err) throw err;
     });
+
+    console.log("Job finished.");
 }
 
 if (fs.existsSync('./dist')) {
