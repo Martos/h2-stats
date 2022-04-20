@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -30,12 +30,12 @@ jobs:
     - run: echo Hello, world!
     - run: echo test > my_file.txt
     - run: npm install
-    - run: node minimize.js
+    - run: npm run minify
     - name: Creating zip
       uses: papeloto/action-zip@v1
       with:
-          files: ${{ github.workspace }}/dist/
-          recursive: false
+          files: ${{ github.workspace }}/dist/*
+          recursive: true
           dest: result.zip
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v3
