@@ -34,7 +34,7 @@ jobs:
     - name: Creating zip
       uses: papeloto/action-zip@v1
       with:
-          files: dist/stats/info.json
+          files: dist/
           recursive: true
           dest: result.zip
     - name: 'Upload Artifact'
