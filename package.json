@@ -1,5 +1,10 @@
 {
+  "name": "h2-stats_minimizer",
+  "version": "1.0.0",
   "dependencies": {
     "luamin": "^1.0.4"
+  },
+  "scripts": {
+    "minify": "node minimize.js"   
   }
 }
