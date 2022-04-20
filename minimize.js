@@ -2,6 +2,8 @@ const fs = require('fs');
 var luamin = require('luamin');
 
 function logic() {
+    console.log("Creating directories...");
+
     fs.mkdirSync('./dist');
     fs.mkdirSync('./dist/stats');
     fs.mkdirSync('./dist/stats/scripts');
@@ -51,6 +53,7 @@ function logic() {
 if (fs.existsSync('./dist')) {
     fs.rm('./dist', { recursive: true }, (err) => {
         if (err) {
+            console.log(err);
             throw err;
         }
     
