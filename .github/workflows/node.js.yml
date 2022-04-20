@@ -28,7 +28,18 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: echo Hello, world!
+    - run: echo test > my_file.txt
     - run: npm install
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: node minimize.js
+    - name: Creating zip
+      uses: papeloto/action-zip@v1
+      with:
+          files: ${{ github.workspace }}/dist/
+          recursive: false
+          dest: result.zip
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v3
+      with:
+        name: h2-stats
+        path: result.zip
+        retention-days: 5
