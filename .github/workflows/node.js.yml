@@ -34,7 +34,7 @@ jobs:
     - name: Creating zip
       uses: papeloto/action-zip@v1
       with:
-          files: dist/*
+          files: ${{ github.workspace }}/dist/
           recursive: false
           dest: result.zip
     - name: 'Upload Artifact'
