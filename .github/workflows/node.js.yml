@@ -31,9 +31,15 @@ jobs:
     - run: echo test > my_file.txt
     - run: npm install
     - run: node minimize.js
+    - name: Creating zip
+      uses: papeloto/action-zip@v1
+      with:
+          files: dist/*
+          recursive: false
+          dest: result.zip
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v3
       with:
-        name: my-artifact
-        path: my_file.txt
+        name: h2-stats
+        path: result.zip
         retention-days: 5
