@@ -5,7 +5,7 @@ local language = 1
 
 LUI.addmenubutton("main_campaign", {
     index = 5,
-    text = "@XBOXLIVE_VIEW_PROFILE",
+    text = "@MENU_STATS_CAPS",
     description = statsEntryDescription[language],
     callback = function()
         LUI.FlowManager.RequestAddMenu(nil, "stats_menu")
@@ -94,7 +94,7 @@ end
 
 LUI.MenuBuilder.registerType("stats_menu", function(a1)
     local menu = LUI.MenuTemplate.new(a1, {
-        menu_title = Engine.Localize("@XBOXLIVE_VIEW_PROFILE"),
+        menu_title = Engine.Localize("@MENU_STATS_CAPS"),
         exclusiveController = 0,
         menu_width = 400,
         menu_top_indent = LUI.MenuTemplate.spMenuOffset,
