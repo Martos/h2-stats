@@ -1,52 +1,7 @@
-local ui = require("utils/ui")
+local playerStats = {0,0,0,0,0}
+local language = 1
 
-local playerStats = {0, 0, 0, 0, 0}
-local statsVersion = 36
-
-local language = 1 | game:getdvarint("loc_language")
-
-local out = io.open("stats.bin", "rb")
-
-if out == nil then
-    LUI.FlowManager.RequestAddMenu( self, "welcomeDialog" )
-    local out = io.open("stats.bin", "w")
-        
-    out:write(game:getdvar("name"))
-    out:seek("set", 20)
-    out:write("0")
-    out:seek("set", 30)
-    out:write("0")
-    out:seek("set", 40)
-    out:write("0")
-    out:seek("set", 50)
-    out:write("0")
-    out:seek("set", 60)
-    out:write("0")
-    out:seek("set", 100)
-    out:write(statsVersion)
-
-    out:close()
-end
-if out ~=nil then
-    local playerName = out:read(16)
-    out:seek("set", 20)
-    playerStats[1] = out:read("*n")
-    out:seek("set", 30)
-    playerStats[2] = out:read("*n")
-    out:seek("set", 40)
-    playerStats[3] = out:read("*n")
-    out:seek("set", 50)
-    playerStats[4] = out:read("*n")
-    out:seek("set", 60)
-    playerStats[5] = out:read("*n")
-    out:seek("set", 100)
-    statsVersion = out:read("*n")
-    out:close()
-end
-
-
-
-game:setdvar("name", playerName)
+--[[ LUI.FlowManager.RequestAddMenu( self, "welcomeDialog" ) ]]
 
 LUI.addmenubutton("main_campaign", {
     index = 5,
@@ -56,6 +11,16 @@ LUI.addmenubutton("main_campaign", {
         LUI.FlowManager.RequestAddMenu(nil, "stats_menu")
     end
 })
+
+function load_stats()
+    playerStats = {
+        mods.stats.getor("kills", 0), 
+        mods.stats.getor("deaths", 0), 
+        mods.stats.getor("damage_dealt", 0), 
+        formatDate(mods.stats.getor("time", 0)), 
+        mods.stats.getor("experience", 0)
+    }
+end
 
 function unlock_all()
     CoD.AllowCheat = true
@@ -67,14 +32,12 @@ end
 function enableUnlockAllButton()
     local ret = true
 
-    if (playerStats[5] >= 50000) then
+    if (mods.stats.getor("experience", 0) >= 50000) then
         ret = false
     end
 
     return ret
 end
-
-playerStats[4] = formatDate(playerStats[4])
 
 function generateStatsMenu(parent)
 
@@ -88,7 +51,9 @@ function generateStatsMenu(parent)
         alpha = 1
     } )
 
-    printVersion:setText(statsVersionAll[language].." "..statsVersion)
+    printVersion:setText(statsVersionAll[language].." "..1)
+
+    load_stats()
 
     for i = 1,#statsTextsAll[language] do
         local test = LUI.UIText.new( {
@@ -237,23 +202,13 @@ LUI.MenuBuilder.registerType("stats_menu", function(a1)
 end)
 
 function resetStats()
-    local out = io.open("stats.bin", "wb")
-        
-    out:write(game:getdvar("name"))
-    out:seek("set", 20)
-    out:write("0")
-    out:seek("set", 30)
-    out:write("0")
-    out:seek("set", 40)
-    out:write("0")
-    out:seek("set", 50)
-    out:write("0")
-    out:seek("set", 60)
-    out:write("0")
-    out:seek("set", 100)
-    out:write(statsVersion)
+    mods.stats.set("experience", 0)
+    mods.stats.set("kills", 0)
+    mods.stats.set("deaths", 0)
+    mods.stats.set("time", 0)
+    mods.stats.set("damage_dealt", 0)
 
-    out:close()
+    load_stats()
 
     print("Stat reset")
     LUI.FlowManager.RequestAddMenu( self, "resetSuccessDialog" )
@@ -287,7 +242,7 @@ function unlock_all_popmenu( f15_arg0, f15_arg1 )
 end
 
 local f0_local3 = function ( f6_arg0, f6_arg1 )
-	Engine.SystemRestart( "" )
+	
 end
 function reset_success( f15_arg0, f15_arg1 )
     return LUI.MenuBuilder.BuildRegisteredType( "generic_confirmation_popup", {
